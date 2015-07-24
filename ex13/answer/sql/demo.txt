@@ -1,0 +1,6 @@
+select `name`,`age`,`gender`,`score` from Student where `gender` = 'female' AND `score` >= 60 AND ( `age` < 12 OR `age` > 24 ) order by `score`,`age` desc
+select * from Student
+insert into Student (`age`,`name`,`score`) values (18,'John Ming',99.9)
+update Student set `age`=20, `gender`='male' where `name` like 'john %'
+delete from Student where `age` >= 24
+select `name`,`grade`,`class` from Student where `age` > 24 AND `score` < 60 AND `gender` = 'male'

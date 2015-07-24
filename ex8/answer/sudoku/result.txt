@@ -1,0 +1,90 @@
+test_naive_o0.exe 
+[O] correct. : 0.028 sec.  1 answer(s) found. 
+[O] correct. : 0.086 sec.  36 answer(s) found. 
+[O] correct. : 1.682 sec.  2451 answer(s) found. 
+[O] correct. : 10.247 sec.  3532 answer(s) found. 
+Total Time : 12.043 sec.
+test_naive_o2.exe 
+[O] correct. : 0.005 sec.  1 answer(s) found. 
+[O] correct. : 0.026 sec.  36 answer(s) found. 
+[O] correct. : 0.55 sec.  2451 answer(s) found. 
+[O] correct. : 3.355 sec.  3532 answer(s) found. 
+Total Time : 3.936 sec.
+test_naive_o3.exe 
+[O] correct. : 0.005 sec.  1 answer(s) found. 
+[O] correct. : 0.024 sec.  36 answer(s) found. 
+[O] correct. : 0.488 sec.  2451 answer(s) found. 
+[O] correct. : 2.969 sec.  3532 answer(s) found. 
+Total Time : 3.486 sec.
+test_naive_simplified_o0.exe 
+[O] correct. : 0.016 sec.  1 answer(s) found. 
+[O] correct. : 0.079 sec.  36 answer(s) found. 
+[O] correct. : 1.648 sec.  2451 answer(s) found. 
+[O] correct. : 10.059 sec.  3532 answer(s) found. 
+Total Time : 11.802 sec.
+test_naive_simplified_o2.exe 
+[O] correct. : 0.006 sec.  1 answer(s) found. 
+[O] correct. : 0.027 sec.  36 answer(s) found. 
+[O] correct. : 0.548 sec.  2451 answer(s) found. 
+[O] correct. : 3.367 sec.  3532 answer(s) found. 
+Total Time : 3.948 sec.
+test_naive_simplified_o3.exe 
+[O] correct. : 0.005 sec.  1 answer(s) found. 
+[O] correct. : 0.024 sec.  36 answer(s) found. 
+[O] correct. : 0.498 sec.  2451 answer(s) found. 
+[O] correct. : 3.043 sec.  3532 answer(s) found. 
+Total Time : 3.57 sec.
+test_stack_o0.exe 
+[O] correct. : 0.017 sec.  1 answer(s) found. 
+[O] correct. : 0.087 sec.  36 answer(s) found. 
+[O] correct. : 1.801 sec.  2451 answer(s) found. 
+[O] correct. : 11.011 sec.  3532 answer(s) found. 
+Total Time : 12.916 sec.
+test_stack_o2.exe 
+[O] correct. : 0.006 sec.  1 answer(s) found. 
+[O] correct. : 0.03 sec.  36 answer(s) found. 
+[O] correct. : 0.616 sec.  2451 answer(s) found. 
+[O] correct. : 3.789 sec.  3532 answer(s) found. 
+Total Time : 4.441 sec.
+test_stack_o3.exe 
+[O] correct. : 0.005 sec.  1 answer(s) found. 
+[O] correct. : 0.028 sec.  36 answer(s) found. 
+[O] correct. : 0.562 sec.  2451 answer(s) found. 
+[O] correct. : 3.455 sec.  3532 answer(s) found. 
+Total Time : 4.05 sec.
+test_stack_simplified_o0.exe 
+[O] correct. : 0.017 sec.  1 answer(s) found. 
+[O] correct. : 0.087 sec.  36 answer(s) found. 
+[O] correct. : 1.813 sec.  2451 answer(s) found. 
+[O] correct. : 11.037 sec.  3532 answer(s) found. 
+Total Time : 12.954 sec.
+test_stack_simplified_o2.exe 
+[O] correct. : 0.005 sec.  1 answer(s) found. 
+[O] correct. : 0.029 sec.  36 answer(s) found. 
+[O] correct. : 0.579 sec.  2451 answer(s) found. 
+[O] correct. : 3.568 sec.  3532 answer(s) found. 
+Total Time : 4.181 sec.
+test_stack_simplified_o3.exe 
+[O] correct. : 0.005 sec.  1 answer(s) found. 
+[O] correct. : 0.026 sec.  36 answer(s) found. 
+[O] correct. : 0.517 sec.  2451 answer(s) found. 
+[O] correct. : 3.187 sec.  3532 answer(s) found. 
+Total Time : 3.735 sec.
+test_ultimate_o0.exe 
+[O] correct. : 0.002 sec.  1 answer(s) found. 
+[O] correct. : 0.007 sec.  36 answer(s) found. 
+[O] correct. : 0.141 sec.  2451 answer(s) found. 
+[O] correct. : 0.873 sec.  3532 answer(s) found. 
+Total Time : 1.023 sec.
+test_ultimate_o2.exe 
+[O] correct. : 0 sec.  1 answer(s) found. 
+[O] correct. : 0.003 sec.  36 answer(s) found. 
+[O] correct. : 0.063 sec.  2451 answer(s) found. 
+[O] correct. : 0.373 sec.  3532 answer(s) found. 
+Total Time : 0.439 sec.
+test_ultimate_o3.exe 
+[O] correct. : 0 sec.  1 answer(s) found. 
+[O] correct. : 0.003 sec.  36 answer(s) found. 
+[O] correct. : 0.063 sec.  2451 answer(s) found. 
+[O] correct. : 0.373 sec.  3532 answer(s) found. 
+Total Time : 0.439 sec.
