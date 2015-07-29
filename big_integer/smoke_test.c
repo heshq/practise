@@ -54,7 +54,7 @@ void number_2_string( unsigned number, char *string, size_t size) {
               }                                         \
               total_test++;
 #define BUFFER_SIZE 12
-void generate_test_number()
+void test_1()
 {
     puts("--------------test 1 begin--------------");
     unsigned arr[ 30];
@@ -110,10 +110,48 @@ void generate_test_number()
 #undef ASSERT
 
 
-void big_integer_qsort( BigInteger **Number){
+void big_integer_qsort( BigInteger **number, size_t size){
+    if( size <= 1)
+        return;
+    size_t lower = 1, upper = size -1;
+    BigInteger *temp = big_integer_create( 10000, false);
+    size_t key = 0;
+    while( lower < upper) {
+        while( lower < upper && big_integer_less_equal( number[ lower], number[ key]))
+            lower++;
+        big_integer_assign( temp, number[ key]);
+        big_integer_assign( number[ key], number[ lower]);
+        big_integer_assign( number[ lower], number[ key]);
+        while( lower < upper && big_integer_greater_equal( number[ upper], number[ key]))
+            upper--;
+        big_integer_assign( temp, number[ key]);
+        big_integer_assign( number[ key], number[ upper]);
+        big_integer_assign( number[ upper], number[ key]);
+    }
+    big_integer_qsort( number, key);
+    big_integer_qsort( number + key + 1, size - key - 1);
 }
 
-void test_2( ){}
+#define NUMBER_SIZE 10000
+#define ARRAY_SIZE 100
+void test_2(){
+    puts("--------------test 2 begin--------------");
+    BigInteger* numbers[ ARRAY_SIZE];
+    for( int i = 0; i < ARRAY_SIZE; i++) {
+        numbers[ i] = big_integer_create( NUMBER_SIZE, false);
+        numbers[ i]->data[ 0] = i;
+    }
+    big_integer_qsort( numbers, ARRAY_SIZE);
+    for( int i = 0; i < ARRAY_SIZE; i++) {
+        big_integer_output( numbers[ i]);
+    }
+    for( int i = 0; i < ARRAY_SIZE; i++) {
+        big_integer_destroy( numbers[ i]);
+    }
+    puts("--------------test 2 over--------------\n\n\n");
+}
+#undef NUMBER_SIZE
+#undef ARRAY_SIZE
 
 void test_3( unsigned base_number, unsigned power) {
     puts("--------------test 3 begin--------------");
@@ -142,7 +180,8 @@ void test_3( unsigned base_number, unsigned power) {
 }
 
 int main() {
-    generate_test_number();
+    test_1();
+    test_2();
     test_3( 1001, 12);
     return 0;
 }
