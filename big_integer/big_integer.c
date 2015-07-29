@@ -34,10 +34,10 @@ _abs_less( BigInteger *left, BigInteger *right) {
     if( _actual_left_size != _actual_right_size) {
         return _actual_left_size < _actual_right_size;
     } else {
-        while( left->data[ _actual_left_size - 1 ] == right->data[ _actual_right_size  - 1]
-              && _actual_left_size > 0)
+        while( _actual_left_size - 1> 0
+              && left->data[ _actual_left_size - 1 ] == right->data[ _actual_right_size  - 1])
             _actual_left_size--;
-        return left->data[ _actual_left_size - 1 ] < right->data[ _actual_right_size  - 1];
+        return left->data[ _actual_left_size - 1 ] < right->data[ _actual_left_size  - 1];
     }
 }
 
@@ -115,7 +115,14 @@ _divide( BigInteger *dividend, BigInteger *divisor, BigInteger *quotient, BigInt
             continue;
         unsigned lower = 0, middle = 0, upper = CARRY_BIT_LIMIT;
         do {
-            middle = temp->data[ 0] = ( lower >> 1) + ( upper >> 1);
+            memset( temp->data, 0, temp->size * sizeof( unsigned));
+            if( lower == upper - 1)
+                lower = upper;
+            middle = ( lower + upper) / 2 ;
+            if( middle == CARRY_BIT_LIMIT)
+                temp->data[ 1] = 1;
+            else
+                temp->data[ 0] = middle;
             memset( product->data, 0, product->size * sizeof( unsigned));
             _multiply( divisor, temp, product, temp2);
             if( _abs_less( remainder, product)) {
@@ -124,12 +131,12 @@ _divide( BigInteger *dividend, BigInteger *divisor, BigInteger *quotient, BigInt
             }
             if( big_integer_assign( temp, big_integer_minus( remainder, product)))
                 goto FINAL;
-            if( _abs_less( divisor, temp)) {
+            if( !_abs_less( temp, divisor)) {
                 lower = middle;
                 continue;
             }
             break;
-        }while( lower < upper - 1);
+        }while( lower < upper);
         big_integer_assign(remainder, temp);
         quotient->data[ remain_size ] = middle;
     }
