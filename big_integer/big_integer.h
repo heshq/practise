@@ -12,13 +12,6 @@ typedef struct {
     unsigned *data;
 } BigInteger;
 
-#define EMPTY_NUMBER NULL
-typedef enum
-{
-    PERSISTENT_OBJ,
-    TEMPORARY_OBJ
-}OBJ_TYPE;
-
 BigInteger* big_integer_op( BigInteger *left, char op, BigInteger *right);
 
 /**
@@ -56,7 +49,7 @@ int big_integer_assign( BigInteger *target, BigInteger *source );
  * 2 if number is negative ,DO NOT give two's complement ,give it like "-1" in decimal form.
  * 3 return NULL if allocate memory failed.
  */
-BigInteger* big_integer_create( size_t size, bool is_temporary);
+BigInteger* big_integer_create( size_t size);
 
 /**
  * 1 free BigInteger object.
@@ -71,9 +64,8 @@ void big_integer_output( BigInteger* bigint);
 
 /**
  * get bigint data from console in decimal form.
- * return NULL if allocate memory failed.
  */
-BigInteger* big_integer_init( char *value);
+void big_integer_init( BigInteger* bigint, char *value);
 
 /**
  * 1. return a temporary object which data is BigInteger left add BigInteger right .

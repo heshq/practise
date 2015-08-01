@@ -2,6 +2,7 @@
 #include "unit_test.h"
 #include "unit_test_list.h"
 
+int malloc_failed = 0;
 int test_case_total = 0;
 int test_case_failed = 0;
 

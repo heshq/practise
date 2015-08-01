@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include "memory_wrapper.h"
 
-int malloc_failed = 0;;
-
 void * __real_malloc( size_t size);
 
 void * __wrap_malloc( size_t size)
