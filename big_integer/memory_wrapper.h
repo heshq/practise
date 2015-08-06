@@ -6,6 +6,18 @@
  */
 extern int malloc_failed;
 
+void* my_malloc( size_t);
+
+void* my_realloc( void*, size_t);
+
+void  my_free( void*);
+
+int init_records();
+
+void free_record();
+
+void memory_report();
+
 #endif
 
 
