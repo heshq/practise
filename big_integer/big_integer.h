@@ -3,6 +3,18 @@
 
 #include <stdbool.h>
 
+#define DEBUG
+#ifdef DEBUG
+#define MALLOC( size)     my_malloc(size)
+#define REALLOC(ptr,size) my_realloc(ptr,size)
+#define FREE(ptr)         my_free(ptr)
+#else
+#define MALLOC(size)      malloc(size)
+#define REALLOC(ptr,size) realloc(ptr,size)
+#define FREE(ptr)         free(ptr)
+#endif
+
+
 typedef struct {
     unsigned is_negative:1;//indicate if the number is negative 1:negative
     unsigned is_temporary:1;//indicate if the struct is temporary object 1:temporary

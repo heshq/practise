@@ -2,6 +2,9 @@
 #include <stdlib.h> // for rand
 #include <string.h>
 #include "big_integer.h"
+#include "memory_wrapper.h"
+
+int malloc_failed = 0;
 
 int find_sqart_root( int target)
 {
@@ -201,9 +204,12 @@ void test_3( unsigned base_number, unsigned power) {
 }
 
 int main() {
+    init_records();
     test_1();
     test_2();
     test_3( 1001, 12);
+    memory_report();
+    free_record();
     return 0;
 }
 

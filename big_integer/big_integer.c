@@ -3,6 +3,7 @@
 #include <stdlib.h>//atoi
 #include <string.h>//for memset,memcpy,strlen
 #include "big_integer.h"
+#include "memory_wrapper.h"
 
 #define CARRY_BIT_LIMIT 10000
 #define DEFAULT_SIZE 10
@@ -25,13 +26,13 @@ BigInteger*
 _create( size_t size, int is_negative, int is_temporary) {
     BigInteger *bigint = NULL;
     errno = 0;
-    bigint = malloc( sizeof( BigInteger));
+    bigint = MALLOC( sizeof( BigInteger));
     if( bigint == NULL)
         return NULL;
     size = ( size > 0)? size: DEFAULT_SIZE;
-    bigint->data = malloc( size * sizeof( unsigned));
+    bigint->data = MALLOC( size * sizeof( unsigned));
     if( bigint->data == NULL) {
-        free( bigint);
+        FREE( bigint);
         return NULL;
     }
     memset( bigint->data, 0, size * sizeof( unsigned));
@@ -47,7 +48,7 @@ int
 _resize( BigInteger *bigint, size_t size) {
     if( size > bigint->size) {
         errno = 0;
-        unsigned *ptr = realloc( bigint->data, size * sizeof( unsigned));
+        unsigned *ptr = REALLOC( bigint->data, size * sizeof( unsigned));
         if( ptr) {
             bigint->data = ptr;
             bigint->size = size;
@@ -119,7 +120,7 @@ _multiply( BigInteger *left, BigInteger *right, BigInteger *result, BigInteger *
             unsigned value = left->data[ i] * right->data[ j];
             temp->data[ i + j] = value % CARRY_BIT_LIMIT;
             temp->data[ i + j + 1] = value / CARRY_BIT_LIMIT;
-            if( _assign_without_destroy( result, big_integer_add( result, temp)))
+            if( big_integer_assign( result, big_integer_add( result, temp)))
                 return ERROR;
         }
     }
@@ -186,7 +187,7 @@ _divide( BigInteger *dividend, BigInteger *divisor, BigInteger *quotient, BigInt
                 upper = middle;
                 continue;
             }
-            if( _assign_without_destroy( temp, big_integer_minus( remainder, product)))
+            if( big_integer_assign( temp, big_integer_minus( remainder, product)))
                 goto FREE;
             if( is_zero(temp))
                 break;
@@ -258,11 +259,16 @@ BigInteger *
 big_integer_create( size_t size) {
     BigInteger *bigint = NULL;
     errno = 0;
-    bigint = malloc( sizeof( BigInteger));
-    if( errno)
+    bigint = MALLOC( sizeof( BigInteger));
+    if( bigint == NULL && errno)
         goto FINAL;
     size = ( size > 0)? size: DEFAULT_SIZE;
-    bigint->data = malloc( size * sizeof( unsigned));
+    bigint->data = MALLOC( size * sizeof( unsigned));
+    errno = 0;
+    if( bigint->data == NULL && errno) {
+        FREE( bigint);
+        goto FINAL;
+    }
     memset( bigint->data, 0, size * sizeof( unsigned));
     bigint->is_negative  = 0;
     bigint->is_temporary = 0;
@@ -312,8 +318,8 @@ void
 big_integer_destroy( BigInteger *bigint) {
     if( bigint) {
         if( bigint->data)
-            free( bigint->data);
-        free( bigint);
+            FREE( bigint->data);
+        FREE( bigint);
     }
 }
 
@@ -487,12 +493,13 @@ big_integer_multiply( BigInteger *left, BigInteger *right) {
     _multiply( left, right, result, temp);
     int symbol = left->is_negative != right->is_negative ? NEGATIVE : POSITIVE;
     result->is_negative = symbol;
-    result->is_temporary = TEMPORARY;
     big_integer_destroy( temp);
 FINAL:
-    if( is_temporary( left) && result != left)
+    if( result)
+        result->is_temporary = TEMPORARY;
+    if( is_temporary( left))
         big_integer_destroy( left);
-    if( is_temporary( right) && result != right)
+    if( is_temporary( right))
         big_integer_destroy( right);
     return result;
 }
@@ -502,8 +509,10 @@ BigInteger *
 big_integer_divide( BigInteger *left, BigInteger *right) {
     BigInteger *result = NULL;
     if( left == NULL || right == NULL) goto FINAL;
-    
+    errno = 0;
     result = _create( left->size, POSITIVE, PERSISTENT);
+    if( result == NULL && errno)
+        goto FINAL;
     if( is_nan( left) || is_nan( right)) {
         result->is_nan = 1;
         goto FINAL;
@@ -522,12 +531,14 @@ big_integer_divide( BigInteger *left, BigInteger *right) {
     }else {
         int symbol = left->is_negative != right->is_negative;
         result->is_negative = symbol;
-        result->is_temporary = TEMPORARY;
     }
+    
 FINAL:
-    if( is_temporary( left) && result != left)
+    if( result)
+        result->is_temporary = TEMPORARY;
+    if( left&&is_temporary( left) )
         big_integer_destroy( left);
-    if( is_temporary( right) && result != right)
+    if( right&&is_temporary( right) )
         big_integer_destroy( right);
     return result;
 }
@@ -555,10 +566,11 @@ big_integer_mod( BigInteger *left, BigInteger *right) {
     }else {
         int symbol = left->is_negative != right->is_negative;
         result->is_negative = symbol;
-        result->is_temporary = TEMPORARY;
     }
     
 FINAL:
+    if( result)
+        result->is_temporary = TEMPORARY;
     if( is_temporary( left) && result != left)
         big_integer_destroy( left);
     if( is_temporary( right) && result != right)

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "memory_wrapper.h"
 #include "unit_test.h"
 #include "unit_test_list.h"
 
@@ -8,6 +9,7 @@ int test_case_failed = 0;
 
 int main()
 {
+    init_records();
     int i = 0;
     while( case_list[ i].func != NULL) {
         int last_case_total = test_case_total;
@@ -20,6 +22,8 @@ int main()
                 test_case_failed - last_case_failed);
         i++;
     }
+    init_records();
+    memory_report();
     printf("TEST %s\n", test_case_failed == 0 ? "PASS":"FAILED");
     return 0;
 }
